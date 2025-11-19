@@ -1,3 +1,5 @@
+TEMP LINK TO GOOGLE DOC: https://docs.google.com/document/d/1p7fJo0ocr2tGmFCGF-kjOOKIMtxYq69RzKkYLv1QlRg/edit?usp=sharing
+
 # Project Overview: MeetHere
 A web-based application designed to streamline group coordination for any community. It solves the two most common friction points in group work: finding a time when everyone is free and finding a location that is geographically fair for all attendees. By integrating a "when2meet" style availability grid with Google Maps API location triangulation, MeetHere calculates the optimal building/location for a meeting based on where members are coming from, wrapped in a spirited "Apple" UI.
 
