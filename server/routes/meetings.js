@@ -2,26 +2,54 @@ const express = require('express');
 const router = express.Router();
 const Meeting = require('../models/Meeting');
 const Participant = require('../models/Participant');
+const User = require('../models/User');
+const { protect } = require('../middleware/auth');
 
-// Create a new meeting
-router.post('/', async (req, res) => {
+// Create a new meeting (Protected)
+router.post('/', protect, async (req, res) => {
   try {
-    const { name, description, dateRange, timeSlots, createdBy } = req.body;
+    const { name, description, availableDays, timeRange, timezone, locationConstraint } = req.body;
+
+    console.log('Creating meeting for user:', req.user._id);
 
     const meeting = new Meeting({
       name,
       description,
-      dateRange,
-      timeSlots,
-      createdBy,
+      availableDays,
+      timeRange,
+      timezone: timezone || 'America/New_York',
+      locationConstraint: locationConstraint || { enabled: false },
+      createdBy: req.user._id,
     });
 
     await meeting.save();
+
+    // Add meeting to user's meetings array
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { meetings: meeting._id }
+    });
+
+    console.log('Meeting created:', meeting.shareLink);
+
     res.status(201).json({ 
       success: true, 
       meeting,
       shareLink: meeting.shareLink,
     });
+  } catch (error) {
+    console.error('Create meeting error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get user's meetings (Protected) - Must come before /:shareLink
+router.get('/my-meetings', protect, async (req, res) => {
+  try {
+    const meetings = await Meeting.find({ createdBy: req.user._id })
+      .populate('participants')
+      .sort({ createdAt: -1 });
+    
+    res.json({ success: true, count: meetings.length, meetings });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }

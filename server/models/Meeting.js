@@ -10,21 +10,42 @@ const meetingSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  dateRange: {
-    startDate: {
-      type: Date,
+  // Available days that participants can select
+  availableDays: [{
+    type: Date,
+    required: true,
+  }],
+  // Time range for each day
+  timeRange: {
+    startTime: {
+      type: String, // e.g., "09:00"
       required: true,
     },
-    endDate: {
-      type: Date,
+    endTime: {
+      type: String, // e.g., "17:00"
       required: true,
     },
   },
-  timeSlots: [{
-    day: String,
-    startTime: String,
-    endTime: String,
-  }],
+  timezone: {
+    type: String,
+    default: 'America/New_York',
+  },
+  // Optional location constraint
+  locationConstraint: {
+    enabled: {
+      type: Boolean,
+      default: false,
+    },
+    center: {
+      lat: Number,
+      lng: Number,
+    },
+    radius: {
+      type: Number, // in miles
+      default: 4,
+    },
+    address: String,
+  },
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Participant',
@@ -44,13 +65,19 @@ const meetingSchema = new mongoose.Schema({
     participantCount: Number,
   },
   createdBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   shareLink: {
     type: String,
     unique: true,
     required: true,
+  },
+  status: {
+    type: String,
+    enum: ['active', 'completed', 'cancelled'],
+    default: 'active',
   },
 }, {
   timestamps: true,

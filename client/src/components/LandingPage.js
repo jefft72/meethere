@@ -13,7 +13,8 @@ const LandingPage = () => {
               <span className="logo-here">Here</span>
             </h1>
             <div className="nav-links">
-              <Link to="/create" className="btn btn-primary">Get Started</Link>
+              <Link to="/signin" className="btn btn-secondary" style={{ marginRight: '12px' }}>Sign In</Link>
+              <Link to="/signup" className="btn btn-primary">Get Started</Link>
             </div>
           </div>
         </div>
@@ -34,8 +35,8 @@ const LandingPage = () => {
               No more endless group chats. No more inconvenient locations.
             </p>
             <div className="hero-buttons">
-              <Link to="/create" className="btn btn-primary btn-large">
-                Create Meeting
+              <Link to="/signup" className="btn btn-primary btn-large">
+                Get Started
               </Link>
               <a href="#features" className="btn btn-secondary btn-large">
                 Learn More
@@ -153,7 +154,7 @@ const LandingPage = () => {
           <div className="cta-content">
             <h2>Ready to Coordinate Your Team?</h2>
             <p>Join Purdue students simplifying group meetings</p>
-            <Link to="/create" className="btn btn-primary btn-large">
+            <Link to="/signup" className="btn btn-primary btn-large">
               Create Your First Meeting
             </Link>
           </div>
@@ -172,7 +173,7 @@ const LandingPage = () => {
                 <h4>Product</h4>
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
-                <Link to="/create">Create Meeting</Link>
+                <Link to="/signup">Get Started</Link>
               </div>
               <div className="footer-section">
                 <h4>About</h4>
