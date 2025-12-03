@@ -72,7 +72,6 @@ const meetingSchema = new mongoose.Schema({
   shareLink: {
     type: String,
     unique: true,
-    required: true,
   },
   status: {
     type: String,
