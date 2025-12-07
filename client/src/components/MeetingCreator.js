@@ -460,7 +460,7 @@ const MeetingCreator = () => {
               </div>
               
               <div className="button-group">
-                <button className="btn btn-secondary" onClick={() => navigate('/create')}>
+                <button className="btn btn-secondary" onClick={() => window.location.href = '/create'}>
                   Create Another
                 </button>
                 <button className="btn btn-primary" onClick={() => navigate('/dashboard')}>
