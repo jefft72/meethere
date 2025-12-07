@@ -20,17 +20,7 @@ router.post('/', protect, async (req, res) => {
       timezone: timezone || 'America/New_York',
       locationConstraint: locationConstraint || { enabled: false },
       createdBy: req.user._id,
-      // TEMPORARY: Add mock optimal results for testing UI
-      optimalTime: {
-        dayIndex: 0,
-        timeIndex: 5,
-        participantCount: 3
-      },
-      optimalLocation: {
-        buildingName: 'Lawson Computer Science Building',
-        buildingAbbr: 'LWSN',
-        coordinates: { lat: 40.4283, lng: -86.9162 }
-      }
+      // Optimal time and location will be calculated when participants join
     });
 
     await meeting.save();
@@ -59,7 +49,10 @@ router.get('/my-meetings', protect, async (req, res) => {
     const meetings = await Meeting.find({ createdBy: req.user._id })
       .populate('participants')
       .sort({ createdAt: -1 });
-    
+
+    // Check and update expiration status for all meetings
+    await Promise.all(meetings.map(meeting => meeting.checkAndUpdateExpiration()));
+
     res.json({ success: true, count: meetings.length, meetings });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -74,6 +67,18 @@ router.get('/:shareLink', async (req, res) => {
 
     if (!meeting) {
       return res.status(404).json({ success: false, error: 'Meeting not found' });
+    }
+
+    // Check and update expiration status
+    await meeting.checkAndUpdateExpiration();
+
+    // Block access to expired meetings for new participants
+    if (meeting.status === 'expired') {
+      return res.status(410).json({
+        success: false,
+        error: 'This meeting has expired',
+        expired: true
+      });
     }
 
     res.json({ success: true, meeting });
