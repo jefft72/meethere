@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axios';
 import './MeetingCreator.css';
 
 const MeetingCreator = () => {
@@ -460,7 +460,7 @@ const MeetingCreator = () => {
               </div>
               
               <div className="button-group">
-                <button className="btn btn-secondary" onClick={() => navigate('/create')}>
+                <button className="btn btn-secondary" onClick={() => window.location.href = '/create'}>
                   Create Another
                 </button>
                 <button className="btn btn-primary" onClick={() => navigate('/dashboard')}>
