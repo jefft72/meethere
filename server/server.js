@@ -1,13 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Handle preflight
+app.options('*', cors());
+
 app.use(express.json());
+app.use(cookieParser());
+
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -22,9 +39,11 @@ const connectDB = async () => {
 };
 
 // Routes
+const authRoutes = require('./routes/auth');
 const meetingRoutes = require('./routes/meetings');
 const participantRoutes = require('./routes/participants');
 
+app.use('/api/auth', authRoutes);
 app.use('/api/meetings', meetingRoutes);
 app.use('/api/participants', participantRoutes);
 
