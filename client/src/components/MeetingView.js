@@ -20,10 +20,10 @@ const MeetingView = () => {
   const [selectedLocationDetail, setSelectedLocationDetail] = useState(null);
 
   useEffect(() => {
-    fetchMeeting();
+    loadMeetingWithLocations();
   }, [id]);
 
-  const fetchMeeting = async () => {
+  const loadMeetingWithLocations = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/meetings/${id}`);
@@ -32,7 +32,7 @@ const MeetingView = () => {
         
         // Fetch optimal locations if location services are enabled
         if (response.data.meeting.locationConstraint?.enabled) {
-          fetchOptimalLocations();
+          loadOptimalLocations();
         }
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const MeetingView = () => {
     }
   };
 
-  const fetchOptimalLocations = async () => {
+  const loadOptimalLocations = async () => {
     try {
       const response = await axios.get(`/api/meetings/${id}/optimal-locations`);
       if (response.data.success) {
@@ -94,7 +94,7 @@ const MeetingView = () => {
       if (response.data.success) {
         setHasSubmitted(true);
         // Refetch meeting data to update participants list
-        await fetchMeeting();
+        await loadMeetingWithLocations();
       }
     } catch (error) {
       console.error('Submit error:', error);
