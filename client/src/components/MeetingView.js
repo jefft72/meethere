@@ -68,10 +68,16 @@ const MeetingView = () => {
       setLoading(true);
       setError('');
       
+      // Convert availability from string format "dayIndex-timeIndex" to object format
+      const formattedAvailability = userAvailability.map(slot => {
+        const [dayIndex, timeIndex] = slot.split('-').map(Number);
+        return { dayIndex, timeIndex };
+      });
+      
       const participantData = {
         meetingId: meeting._id,
         name: userName,
-        availability: userAvailability,
+        availability: formattedAvailability,
         location: userLocation ? {
           buildingName: userLocation.name,
           buildingAbbr: userLocation.abbr,
