@@ -6,44 +6,58 @@ import AvailabilityGrid from './AvailabilityGrid';
 import LocationMap from './LocationMap';
 
 const MeetingView = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // This is the shareLink
   const navigate = useNavigate();
   const [meeting, setMeeting] = useState(null);
   const [userName, setUserName] = useState('');
-  const [userLocation, setUserLocation] = useState(null);
   const [userAvailability, setUserAvailability] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [optimalLocations, setOptimalLocations] = useState([]);
-  const [locationTab, setLocationTab] = useState('participants'); // 'participants' or 'optimal'
+  const [locationTab, setLocationTab] = useState('participants');
   const [selectedLocationDetail, setSelectedLocationDetail] = useState(null);
 
+  // Fetch real meeting data on mount
   useEffect(() => {
-    loadMeetingWithLocations();
+    fetchMeeting();
   }, [id]);
 
-  const loadMeetingWithLocations = async () => {
+  const fetchMeeting = async () => {
     try {
       setLoading(true);
+      setError('');
       const response = await axios.get(`/api/meetings/${id}`);
+
       if (response.data.success) {
         setMeeting(response.data.meeting);
         
         // Fetch optimal locations if location services are enabled
         if (response.data.meeting.locationConstraint?.enabled) {
-          loadOptimalLocations();
+          fetchOptimalLocations();
         }
+      } else {
+        setError('Meeting not found');
       }
-    } catch (error) {
-      console.error('Fetch meeting error:', error);
-      setError('Failed to load meeting');
+    } catch (err) {
+      console.error('Error fetching meeting:', err);
+
+      // Handle expired meeting (HTTP 410)
+      if (err.response && err.response.status === 410) {
+        setError('This meeting has expired and is no longer accepting responses.');
+      } else if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError('Failed to load meeting. Please check the link and try again.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const loadOptimalLocations = async () => {
+  const fetchOptimalLocations = async () => {
     try {
       const response = await axios.get(`/api/meetings/${id}/optimal-locations`);
       if (response.data.success) {
@@ -54,79 +68,121 @@ const MeetingView = () => {
     }
   };
 
+  const handleAvailabilityUpdate = (data) => {
+    // Convert selectedSlots array to availability format
+    const availability = data.selectedSlots.map(slot => {
+      const [dayIndex, timeIndex] = slot.split('-').map(Number);
+      return { dayIndex, timeIndex };
+    });
+    setUserAvailability(availability);
+  };
+
   const handleSubmit = async () => {
     if (!userName.trim()) {
       setError('Please enter your name');
       return;
     }
-    
-    if (meeting.locationConstraint?.enabled && !userLocation) {
-      setError('Please select your starting location');
+
+    if (userAvailability.length === 0) {
+      setError('Please select at least one time slot');
+      return;
+    }
+
+    if (!userLocation) {
+      setError('Please select your location');
       return;
     }
 
     try {
-      setLoading(true);
+      setSubmitting(true);
       setError('');
-      
-      // Convert availability from string format "dayIndex-timeIndex" to object format
-      const formattedAvailability = userAvailability.map(slot => {
-        const [dayIndex, timeIndex] = slot.split('-').map(Number);
-        return { dayIndex, timeIndex };
-      });
-      
+
+      // Submit participant data
       const participantData = {
         meetingId: meeting._id,
-        name: userName,
-        availability: formattedAvailability,
-        location: userLocation ? {
+        name: userName.trim(),
+        availability: userAvailability,
+        location: {
           buildingName: userLocation.name,
           buildingAbbr: userLocation.abbr,
           coordinates: {
             lat: userLocation.lat,
-            lng: userLocation.lng,
+            lng: userLocation.lng
           }
-        } : null,
+        }
       };
 
       const response = await axios.post('/api/participants', participantData);
-      
+
       if (response.data.success) {
+        // Trigger recalculation of optimal time/location
+        await axios.put(`/api/meetings/${id}`);
+
+        // Refresh meeting data to get updated results
+        await fetchMeeting();
+
         setHasSubmitted(true);
-        // Refetch meeting data to update participants list
-        await loadMeetingWithLocations();
       }
-    } catch (error) {
-      console.error('Submit error:', error);
-      setError(error.response?.data?.error || 'Failed to submit');
+    } catch (err) {
+      console.error('Error submitting availability:', err);
+      setError('Failed to submit. Please try again.');
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
-  if (loading && !meeting) {
-    return (
-      <div className="meeting-view">
-        <div className="loading">Loading meeting...</div>
-      </div>
-    );
-  }
+  // Format date helper
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
-  if (error && !meeting) {
-    return (
-      <div className="meeting-view">
-        <div className="error">{error}</div>
-      </div>
-    );
-  }
+  // Format time helper
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+    return `${displayHour}:${minutes} ${ampm}`;
+  };
 
-  if (!meeting) {
+  // Get optimal time display
+  const getOptimalTimeDisplay = () => {
+    if (!meeting.optimalTime || !meeting.availableDays) {
+      return 'Calculating...';
+    }
+
+    const { dayIndex, participantCount } = meeting.optimalTime;
+    const date = meeting.availableDays[dayIndex];
+
+    if (!date) {
+      return 'No optimal time found yet';
+    }
+
     return (
-      <div className="meeting-view">
-        <div className="error">Meeting not found</div>
-      </div>
+      <>
+        {formatDate(date)}<br />
+        {formatTime(meeting.timeRange.startTime)} - {formatTime(meeting.timeRange.endTime)}
+        <div className="result-detail" style={{ marginTop: '8px' }}>
+          {participantCount} {participantCount === 1 ? 'person' : 'people'} available
+        </div>
+      </>
     );
-  }
+  };
+
+  // Get optimal location display
+  const getOptimalLocationDisplay = () => {
+    if (!meeting.optimalLocation) {
+      return 'Calculating...';
+    }
+
+    const { buildingName, buildingAbbr } = meeting.optimalLocation;
+    return `🏛️ ${buildingName || buildingAbbr || 'Calculated Center Point'}`;
+  };
 
   // Get all participant locations including creator
   const getAllParticipantLocations = () => {
@@ -151,7 +207,38 @@ const MeetingView = () => {
     return locations;
   };
 
-  const participantLocations = getAllParticipantLocations();
+  if (loading) {
+    return (
+      <div className="meeting-view">
+        <div className="loading">Loading meeting...</div>
+      </div>
+    );
+  }
+
+  if (error && !meeting) {
+    return (
+      <div className="meeting-view">
+        <div className="meeting-content">
+          <div className="container">
+            <div className="error-message">
+              <h2>❌ {error}</h2>
+              <button className="btn btn-primary" onClick={() => navigate('/')}>
+                Go Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!meeting) {
+    return (
+      <div className="meeting-view">
+        <div className="loading">Meeting not found</div>
+      </div>
+    );
+  }
 
   return (
     <div className="meeting-view">
@@ -171,15 +258,28 @@ const MeetingView = () => {
             {meeting.description && <p className="meeting-description">{meeting.description}</p>}
             <div className="meeting-meta">
               <span className="meta-item">
-                {meeting.participants?.length || 0} participants
+                👥 {meeting.participants?.length || 0} participants
               </span>
-              {meeting.locationConstraint?.enabled && (
-                <span className="meta-item">
-                  📍 Location services enabled
-                </span>
-              )}
+              <span className="meta-item">
+                📅 {meeting.availableDays?.length || 0} days available
+              </span>
+              <span className="meta-item">
+                ⏰ {formatTime(meeting.timeRange.startTime)} - {formatTime(meeting.timeRange.endTime)}
+              </span>
             </div>
           </div>
+
+          {error && (
+            <div className="error-banner" style={{
+              padding: '12px',
+              background: '#ff4444',
+              color: 'white',
+              borderRadius: '8px',
+              marginBottom: '20px'
+            }}>
+              {error}
+            </div>
+          )}
 
           {!hasSubmitted ? (
             <>
@@ -200,33 +300,39 @@ const MeetingView = () => {
 
               <div className="section">
                 <h2 className="section-header">Mark Your Availability</h2>
-                <AvailabilityGrid 
+                <p style={{ marginBottom: '16px', color: '#666' }}>
+                  Select the times when you're available to meet
+                </p>
+                <AvailabilityGrid
                   isCreator={false}
-                  onUpdate={(data) => setUserAvailability(data.selectedSlots || [])}
+                  availableDays={meeting.availableDays}
+                  timeRange={meeting.timeRange}
+                  onUpdate={handleAvailabilityUpdate}
                 />
+                {userAvailability.length > 0 && (
+                  <p style={{ marginTop: '12px', color: '#CEB888' }}>
+                    ✓ {userAvailability.length} time slots selected
+                  </p>
+                )}
               </div>
 
-              {meeting.locationConstraint?.enabled && (
-                <div className="section">
-                  <h2 className="section-header">Your Starting Location *</h2>
-                  <p className="section-hint">
-                    Select where you'll be coming from to help find the best meeting spot
-                  </p>
-                  <LocationMap 
-                    onLocationSelect={(location) => setUserLocation(location)}
-                  />
-                </div>
-              )}
-
-              {error && <div className="error-message">{error}</div>}
+              <div className="section">
+                <h2 className="section-header">Your Starting Location</h2>
+                <p style={{ marginBottom: '16px', color: '#666' }}>
+                  Where will you be coming from?
+                </p>
+                <LocationMap
+                  onLocationSelect={(location) => setUserLocation(location)}
+                />
+              </div>
 
               <div className="submit-section">
                 <button
                   className="btn btn-primary btn-large"
                   onClick={handleSubmit}
-                  disabled={loading || !userName.trim() || (meeting.locationConstraint?.enabled && !userLocation)}
+                  disabled={!userName.trim() || !userLocation || userAvailability.length === 0 || submitting}
                 >
-                  {loading ? 'Submitting...' : 'Submit Availability'}
+                  {submitting ? 'Submitting...' : 'Submit Availability'}
                 </button>
               </div>
             </>
@@ -238,7 +344,29 @@ const MeetingView = () => {
                 <p>Your availability has been recorded.</p>
               </div>
 
-              {meeting.locationConstraint?.enabled && participantLocations.length > 0 && (
+              <div className="section">
+                <h2 className="section-header">Current Results</h2>
+                <div className="results-grid">
+                  <div className="result-card">
+                    <h3>Best Meeting Time</h3>
+                    <div className="result-value">
+                      {getOptimalTimeDisplay()}
+                    </div>
+                  </div>
+
+                  <div className="result-card">
+                    <h3>Optimal Location</h3>
+                    <div className="result-value">
+                      {getOptimalLocationDisplay()}
+                    </div>
+                    <div className="result-detail">
+                      Most central location for all participants
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {meeting.locationConstraint?.enabled && getAllParticipantLocations().length > 0 && (
                 <div className="section">
                   <h2 className="section-header">Meeting Locations</h2>
                   
@@ -247,7 +375,7 @@ const MeetingView = () => {
                       className={`tab-button ${locationTab === 'participants' ? 'active' : ''}`}
                       onClick={() => setLocationTab('participants')}
                     >
-                      Where Everyone Wants to Meet ({participantLocations.length})
+                      Where Everyone Wants to Meet ({getAllParticipantLocations().length})
                     </button>
                     <button 
                       className={`tab-button ${locationTab === 'optimal' ? 'active' : ''}`}
@@ -260,7 +388,7 @@ const MeetingView = () => {
                   <div className="tab-content">
                     {locationTab === 'participants' && (
                       <div className="participant-locations-list">
-                        {participantLocations.map((loc, index) => (
+                        {getAllParticipantLocations().map((loc, index) => (
                           <div 
                             key={index} 
                             className="location-card clickable"
@@ -355,27 +483,39 @@ const MeetingView = () => {
               )}
 
               <div className="section">
-                <h2 className="section-header">Participants</h2>
+                <h2 className="section-header">Participants ({meeting.participants?.length || 0})</h2>
                 <div className="participants-list">
                   {meeting.participants && meeting.participants.length > 0 ? (
                     meeting.participants.map((participant, index) => (
-                      <div key={index} className="participant-item">
+                      <div key={participant._id || index} className="participant-item">
                         <div className="participant-avatar">
-                          {participant.name.charAt(0)}
+                          {participant.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="participant-info">
                           <div className="participant-name">{participant.name}</div>
                           <div className="participant-details">
                             {participant.availability?.length || 0} slots available
-                            {participant.location && ` • From ${participant.location.buildingAbbr || participant.location.buildingName || 'Custom location'}`}
+                            {participant.location?.buildingAbbr && ` • From ${participant.location.buildingAbbr}`}
                           </div>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div className="no-participants">No participants yet. Be the first!</div>
+                    <p style={{ color: '#666' }}>No participants yet</p>
                   )}
                 </div>
+              </div>
+
+              <div className="section">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Share link copied to clipboard!');
+                  }}
+                >
+                  📋 Copy Share Link
+                </button>
               </div>
             </div>
           )}
