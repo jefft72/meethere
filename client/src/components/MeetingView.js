@@ -16,6 +16,9 @@ const MeetingView = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [optimalLocations, setOptimalLocations] = useState([]);
+  const [locationTab, setLocationTab] = useState('participants');
+  const [selectedLocationDetail, setSelectedLocationDetail] = useState(null);
 
   // Fetch real meeting data on mount
   useEffect(() => {
@@ -30,6 +33,11 @@ const MeetingView = () => {
 
       if (response.data.success) {
         setMeeting(response.data.meeting);
+        
+        // Fetch optimal locations if location services are enabled
+        if (response.data.meeting.locationConstraint?.enabled) {
+          fetchOptimalLocations();
+        }
       } else {
         setError('Meeting not found');
       }
@@ -46,6 +54,17 @@ const MeetingView = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchOptimalLocations = async () => {
+    try {
+      const response = await axios.get(`/api/meetings/${id}/optimal-locations`);
+      if (response.data.success) {
+        setOptimalLocations(response.data.optimalLocations);
+      }
+    } catch (error) {
+      console.error('Fetch optimal locations error:', error);
     }
   };
 
@@ -163,6 +182,29 @@ const MeetingView = () => {
 
     const { buildingName, buildingAbbr } = meeting.optimalLocation;
     return `🏛️ ${buildingName || buildingAbbr || 'Calculated Center Point'}`;
+  };
+
+  // Get all participant locations including creator
+  const getAllParticipantLocations = () => {
+    const locations = [];
+    
+    if (meeting.creatorLocation) {
+      locations.push({
+        name: 'Creator',
+        ...meeting.creatorLocation
+      });
+    }
+    
+    meeting.participants?.forEach(p => {
+      if (p.location) {
+        locations.push({
+          name: p.name,
+          ...p.location
+        });
+      }
+    });
+    
+    return locations;
   };
 
   if (loading) {
@@ -323,6 +365,122 @@ const MeetingView = () => {
                   </div>
                 </div>
               </div>
+
+              {meeting.locationConstraint?.enabled && getAllParticipantLocations().length > 0 && (
+                <div className="section">
+                  <h2 className="section-header">Meeting Locations</h2>
+                  
+                  <div className="location-tabs">
+                    <button 
+                      className={`tab-button ${locationTab === 'participants' ? 'active' : ''}`}
+                      onClick={() => setLocationTab('participants')}
+                    >
+                      Where Everyone Wants to Meet ({getAllParticipantLocations().length})
+                    </button>
+                    <button 
+                      className={`tab-button ${locationTab === 'optimal' ? 'active' : ''}`}
+                      onClick={() => setLocationTab('optimal')}
+                    >
+                      Ideal Locations ({optimalLocations.length})
+                    </button>
+                  </div>
+
+                  <div className="tab-content">
+                    {locationTab === 'participants' && (
+                      <div className="participant-locations-list">
+                        {getAllParticipantLocations().map((loc, index) => (
+                          <div 
+                            key={index} 
+                            className="location-card clickable"
+                            onClick={() => setSelectedLocationDetail(loc)}
+                          >
+                            <div className="location-icon">📍</div>
+                            <div className="location-info">
+                              <div className="location-name">{loc.buildingName || 'Selected Location'}</div>
+                              <div className="location-abbr">{loc.buildingAbbr || `${loc.coordinates?.lat.toFixed(4)}, ${loc.coordinates?.lng.toFixed(4)}`}</div>
+                              <div className="location-person">{loc.name}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {locationTab === 'optimal' && (
+                      <div className="optimal-locations-list">
+                        {optimalLocations.length > 0 ? (
+                          optimalLocations.map((loc, index) => (
+                            <div 
+                              key={index} 
+                              className="optimal-location-card clickable"
+                              onClick={() => setSelectedLocationDetail({ ...loc, buildingName: loc.name, buildingAbbr: loc.abbr })}
+                            >
+                              <div className="optimal-rank">#{index + 1}</div>
+                              <div className="optimal-info">
+                                <div className="optimal-name">
+                                  {loc.name}
+                                  <span className="optimal-abbr">{loc.abbr}</span>
+                                </div>
+                                <div className="optimal-stats">
+                                  <span className="stat">
+                                    Avg: {(loc.avgDistance * 3.28084 / 5280).toFixed(2)} mi
+                                  </span>
+                                  <span className="stat">
+                                    ~{Math.round(loc.avgDistance * 3.28084 / 5280 * 20)} min walk
+                                  </span>
+                                </div>
+                                <div className="optimal-fairness">
+                                  Fairness score: {loc.fairnessScore < 100 ? 'Excellent' : loc.fairnessScore < 200 ? 'Good' : 'Fair'}
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="no-locations">
+                            <p>Optimal locations will be calculated once more participants submit their locations.</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {selectedLocationDetail && (
+                <div className="location-detail-modal" onClick={() => setSelectedLocationDetail(null)}>
+                  <div className="location-detail-content" onClick={(e) => e.stopPropagation()}>
+                    <button className="close-button" onClick={() => setSelectedLocationDetail(null)}>×</button>
+                    <h3>📍 {selectedLocationDetail.buildingName || 'Selected Location'}</h3>
+                    {selectedLocationDetail.buildingAbbr && (
+                      <p className="location-abbr-detail">{selectedLocationDetail.buildingAbbr}</p>
+                    )}
+                    {selectedLocationDetail.name && (
+                      <p className="location-person-detail">Selected by: {selectedLocationDetail.name}</p>
+                    )}
+                    {selectedLocationDetail.coordinates && (
+                      <div className="location-coordinates">
+                        <p><strong>Coordinates:</strong></p>
+                        <p>Latitude: {selectedLocationDetail.coordinates.lat.toFixed(6)}</p>
+                        <p>Longitude: {selectedLocationDetail.coordinates.lng.toFixed(6)}</p>
+                        <a 
+                          href={`https://www.google.com/maps/search/?api=1&query=${selectedLocationDetail.coordinates.lat},${selectedLocationDetail.coordinates.lng}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-secondary"
+                        >
+                          Open in Google Maps
+                        </a>
+                      </div>
+                    )}
+                    {selectedLocationDetail.avgDistance && (
+                      <div className="location-stats-detail">
+                        <p><strong>Average Distance:</strong> {(selectedLocationDetail.avgDistance * 3.28084 / 5280).toFixed(2)} miles</p>
+                        <p><strong>Estimated Walk Time:</strong> ~{Math.round(selectedLocationDetail.avgDistance * 3.28084 / 5280 * 20)} minutes</p>
+                        <p><strong>Fairness Score:</strong> {selectedLocationDetail.fairnessScore < 100 ? 'Excellent' : selectedLocationDetail.fairnessScore < 200 ? 'Good' : 'Fair'}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div className="section">
                 <h2 className="section-header">Participants ({meeting.participants?.length || 0})</h2>
