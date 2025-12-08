@@ -186,11 +186,14 @@ const AvailabilityGrid = ({
         ref={gridRef}
         onMouseLeave={handleMouseUp}
       >
-        <div className="grid-header">
+        <div 
+          className="grid-header" 
+          style={{ gridTemplateColumns: `80px repeat(${days.length}, minmax(80px, 1fr))` }}
+        >
           <div className="grid-cell header-cell time-header">Time</div>
           {days.map((day, index) => (
             <div key={index} className="grid-cell header-cell">
-              <div className="day-name">{day.name}</div>
+              <div className="day-name">{day.name}</div> 
               <div className="day-date">{day.date}</div>
             </div>
           ))}
@@ -198,7 +201,11 @@ const AvailabilityGrid = ({
 
         <div className="grid-body">
           {timeSlots.map((time, timeIndex) => (
-            <div key={timeIndex} className="grid-row">
+            <div 
+              key={timeIndex} 
+              className="grid-row"
+              style={{ gridTemplateColumns: `80px repeat(${days.length}, minmax(80px, 1fr))` }}
+            >
               <div className="grid-cell time-cell">{time}</div>
               {days.map((day, dayIndex) => (
                 <div
@@ -207,7 +214,7 @@ const AvailabilityGrid = ({
                     selectedSlots.has(getCellId(dayIndex, timeIndex)) ? 'selected' : ''
                   }`}
                   style={{
-                    backgroundColor: 'var(--purdue-gold)',
+                    backgroundColor: 'var(--accent-blue)',
                     opacity: getOpacity(dayIndex, timeIndex),
                   }}
                   onMouseDown={() => handleMouseDown(dayIndex, timeIndex)}
@@ -222,16 +229,16 @@ const AvailabilityGrid = ({
 
       <div className="grid-legend">
         <div className="legend-item">
-          <div className="legend-color" style={{ backgroundColor: 'var(--purdue-gold)', opacity: 1 }}></div>
+          <div className="legend-color" style={{ backgroundColor: 'var(--accent-blue)', opacity: 1 }}></div>
           <span>Available</span>
         </div>
         <div className="legend-item">
-          <div className="legend-color" style={{ backgroundColor: 'var(--purdue-gold)', opacity: 0.2 }}></div>
+          <div className="legend-color" style={{ backgroundColor: 'var(--accent-blue)', opacity: 0.2 }}></div>
           <span>Not Available</span>
         </div>
       </div>
 
-      <div style={{ marginTop: '12px', fontSize: '14px', color: '#666' }}>
+      <div style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>
         Showing {days.length} {days.length === 1 ? 'day' : 'days'} •
         {timeSlots.length} time slots ({timeRange.startTime} - {timeRange.endTime})
       </div>

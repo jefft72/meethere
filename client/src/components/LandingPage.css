@@ -1,17 +1,19 @@
 .landing-page {
-  background-color: var(--dark-grey);
-  color: var(--white);
+  background-color: #ffffff;
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
 /* Navbar */
 .navbar {
-  background-color: var(--purdue-black);
-  padding: 20px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 12px 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .nav-content {
@@ -21,91 +23,80 @@
 }
 
 .logo {
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -1px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 .logo-meet {
-  color: var(--white);
+  color: var(--text-primary);
 }
 
 .logo-here {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 /* Hero Section */
 .hero {
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, var(--dark-grey) 0%, var(--charcoal) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
   position: relative;
   overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 50px,
-    rgba(206, 184, 136, 0.03) 50px,
-    rgba(206, 184, 136, 0.03) 52px
-  );
-  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 680px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .hero-badge {
   display: inline-block;
-  background-color: rgba(206, 184, 136, 0.15);
-  color: var(--purdue-gold);
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+  background-color: rgba(0, 113, 227, 0.1);
+  color: var(--accent-blue);
+  padding: 6px 16px;
+  border-radius: 980px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 0;
 }
 
 .hero-title {
-  font-size: 64px;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  color: var(--white);
+  font-size: 56px;
+  line-height: 1.07;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 .highlight {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   position: relative;
-  display: inline-block;
+  display: inline;
 }
 
 .hero-subtitle {
-  font-size: 20px;
-  line-height: 1.6;
-  color: #b0b0b0;
-  margin-bottom: 40px;
+  font-size: 21px;
+  line-height: 1.381;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  font-weight: 400;
 }
 
 .hero-buttons {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btn-large {
-  padding: 16px 40px;
-  font-size: 18px;
+  padding: 16px 32px;
+  font-size: 17px;
 }
 
 .hero-visual {
@@ -114,20 +105,21 @@
   top: 50%;
   transform: translateY(-50%);
   width: 400px;
+  display: none;
 }
 
 .visual-card {
-  background-color: var(--charcoal);
-  border-radius: 12px;
+  background-color: #ffffff;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(206, 184, 136, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .card-header {
-  background-color: var(--purdue-black);
+  background-color: #f5f5f7;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(206, 184, 136, 0.2);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .card-dots {
@@ -139,8 +131,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: var(--purdue-gold);
-  opacity: 0.6;
+  background-color: var(--border-color);
 }
 
 .card-content {
@@ -161,46 +152,48 @@
 .grid-cell {
   width: 40px;
   height: 30px;
-  background-color: var(--purdue-gold);
-  border-radius: 2px;
+  background-color: var(--accent-blue);
+  border-radius: 4px;
   transition: all 0.3s ease;
 }
 
 .grid-cell.filled {
-  background-color: var(--purdue-gold);
+  background-color: var(--accent-blue);
 }
 
 /* Features Section */
 .features {
   padding: 100px 0;
-  background-color: var(--charcoal);
+  background-color: #f5f5f7;
 }
 
 .section-title {
   font-size: 48px;
   text-align: center;
   margin-bottom: 60px;
-  color: var(--white);
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.003em;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  gap: 20px;
 }
 
 .feature-card {
-  background-color: var(--dark-grey);
+  background-color: #ffffff;
   padding: 40px 30px;
-  border-radius: 8px;
-  border: 1px solid rgba(206, 184, 136, 0.1);
+  border-radius: 18px;
+  border: none;
   transition: all 0.3s ease;
+  text-align: center;
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--purdue-gold);
-  box-shadow: 0 10px 30px rgba(206, 184, 136, 0.2);
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .feature-icon {
@@ -210,19 +203,21 @@
 
 .feature-card h3 {
   font-size: 24px;
-  margin-bottom: 16px;
-  color: var(--purdue-gold);
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .feature-card p {
-  color: #b0b0b0;
-  line-height: 1.6;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-size: 14px;
 }
 
 /* How It Works */
 .how-it-works {
   padding: 100px 0;
-  background-color: var(--dark-grey);
+  background-color: #ffffff;
 }
 
 .steps {
@@ -240,40 +235,42 @@
 }
 
 .step-number {
-  width: 60px;
-  height: 60px;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  width: 56px;
+  height: 56px;
+  background-color: var(--accent-blue);
+  color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 600;
   margin: 0 auto 20px;
 }
 
 .step h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: var(--white);
+  font-size: 19px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .step p {
-  color: #b0b0b0;
+  color: var(--text-secondary);
   font-size: 14px;
+  line-height: 1.43;
 }
 
 .step-connector {
   width: 60px;
   height: 2px;
-  background: linear-gradient(90deg, var(--purdue-gold), transparent);
+  background: linear-gradient(90deg, var(--accent-blue), var(--border-color));
 }
 
 /* CTA Section */
 .cta {
   padding: 100px 0;
-  background: linear-gradient(135deg, var(--purdue-black) 0%, var(--charcoal) 100%);
+  background: linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%);
 }
 
 .cta-content {
@@ -284,20 +281,22 @@
 
 .cta-content h2 {
   font-size: 48px;
-  margin-bottom: 20px;
-  color: var(--white);
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .cta-content p {
-  font-size: 20px;
-  color: #b0b0b0;
-  margin-bottom: 40px;
+  font-size: 21px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
 }
 
 /* Footer */
 .footer {
-  background-color: var(--purdue-black);
-  padding: 60px 0 30px;
+  background-color: #f5f5f7;
+  padding: 44px 0 22px;
+  border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -308,13 +307,15 @@
 }
 
 .footer-brand h3 {
-  font-size: 28px;
-  color: var(--purdue-gold);
-  margin-bottom: 10px;
+  font-size: 24px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .footer-brand p {
-  color: #888;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .footer-links {
@@ -323,30 +324,33 @@
 }
 
 .footer-section h4 {
-  color: var(--purdue-gold);
-  margin-bottom: 16px;
-  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .footer-section a {
   display: block;
-  color: #b0b0b0;
+  color: var(--text-secondary);
   text-decoration: none;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 14px;
   transition: color 0.3s ease;
 }
 
 .footer-section a:hover {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .footer-bottom {
   text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid rgba(206, 184, 136, 0.1);
-  color: #666;
-  font-size: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 
 /* Responsive */
@@ -372,11 +376,11 @@
   }
 
   .hero-title {
-    font-size: 48px;
+    font-size: 40px;
   }
 
   .hero-subtitle {
-    font-size: 18px;
+    font-size: 19px;
   }
 
   .section-title {
@@ -390,7 +394,7 @@
   .step-connector {
     width: 2px;
     height: 40px;
-    background: linear-gradient(180deg, var(--purdue-gold), transparent);
+    background: linear-gradient(180deg, var(--accent-blue), var(--border-color));
   }
 
   .footer-content {
@@ -401,11 +405,11 @@
 
 @media (max-width: 640px) {
   .hero-title {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .hero-subtitle {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .hero-buttons {

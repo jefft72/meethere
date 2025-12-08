@@ -4,9 +4,9 @@
 }
 
 .meeting-header {
-  background-color: var(--purdue-black);
+  background-color: #ffffff;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(206, 184, 136, 0.2);
+  border-bottom: 2px solid #1d1d1f;
 }
 
 .meeting-content {
@@ -56,7 +56,7 @@
   border-radius: 4px;
   font-family: 'Courier New', monospace;
   font-size: 12px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   border: 1px solid #444;
   margin-left: 8px;
 }
@@ -70,7 +70,7 @@
   color: var(--white);
   margin-bottom: 24px;
   padding-bottom: 12px;
-  border-bottom: 2px solid var(--purdue-gold);
+  border-bottom: 2px solid var(--accent-blue);
 }
 
 .user-form {
@@ -122,8 +122,8 @@
 .success-icon {
   width: 80px;
   height: 80px;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -171,13 +171,13 @@
 
 .result-card:hover {
   transform: translateY(-5px);
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   box-shadow: 0 10px 30px rgba(206, 184, 136, 0.2);
 }
 
 .result-card h3 {
   font-size: 16px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -222,15 +222,15 @@
 
 .participant-item:hover {
   background-color: rgba(206, 184, 136, 0.05);
-  border-left: 3px solid var(--purdue-gold);
+  border-left: 3px solid var(--accent-blue);
 }
 
 .participant-avatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -337,12 +337,12 @@
 }
 
 .tab-button:hover {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .tab-button.active {
-  color: var(--purdue-gold);
-  border-bottom-color: var(--purdue-gold);
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-blue);
 }
 
 .tab-content {
@@ -368,7 +368,7 @@
 }
 
 .location-card:hover {
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   transform: translateY(-2px);
 }
 
@@ -390,7 +390,7 @@
 
 .location-abbr {
   font-size: 14px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
   margin-bottom: 4px;
   display: block;
@@ -420,21 +420,21 @@
 }
 
 .optimal-location-card:hover {
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   transform: translateX(4px);
 }
 
 .optimal-location-card:first-child {
   background: linear-gradient(135deg, rgba(206, 184, 136, 0.1) 0%, var(--charcoal) 100%);
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .optimal-rank {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,7 +444,7 @@
 }
 
 .optimal-location-card:first-child .optimal-rank {
-  background: linear-gradient(135deg, #FFD700, var(--purdue-gold));
+  background: linear-gradient(135deg, #FFD700, var(--accent-blue));
   box-shadow: 0 4px 12px rgba(206, 184, 136, 0.3);
 }
 
@@ -464,7 +464,7 @@
 
 .optimal-abbr {
   font-size: 14px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
   padding: 4px 10px;
   background-color: rgba(206, 184, 136, 0.1);
@@ -485,7 +485,7 @@
 
 .optimal-fairness {
   font-size: 13px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
 }
 
@@ -530,7 +530,7 @@
   }
   
   .tab-button.active {
-    border-left-color: var(--purdue-gold);
+    border-left-color: var(--accent-blue);
     border-bottom-color: transparent;
   }
   
@@ -557,7 +557,7 @@
 
 .location-card.clickable:hover,
 .optimal-location-card.clickable:hover {
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(206, 184, 136, 0.2);
 }
@@ -590,7 +590,7 @@
 }
 
 .location-detail-content h3 {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-size: 24px;
   margin-bottom: 16px;
 }
@@ -623,7 +623,7 @@
 }
 
 .location-person-detail {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-size: 14px;
   margin-bottom: 20px;
   font-weight: 500;

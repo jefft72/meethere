@@ -359,7 +359,7 @@ const MeetingView = () => {
                   onUpdate={handleAvailabilityUpdate}
                 />
                 {userAvailability.length > 0 && (
-                  <p style={{ marginTop: '12px', color: '#CEB888' }}>
+                  <p style={{ marginTop: '12px', color: 'var(--accent-blue)' }}>
                     ✓ {userAvailability.length} time slots selected
                   </p>
                 )}
