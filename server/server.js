@@ -6,7 +6,18 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+// Configure CORS to explicitly allow the frontend origin and support credentials.
+const FRONTEND_URL = process.env.FRONTEND_URL || '*';
+const corsOptions = {
+  origin: FRONTEND_URL === '*' ? true : FRONTEND_URL,
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+};
+
+app.use(cors(corsOptions));
+// Ensure preflight requests are handled
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // MongoDB Connection
@@ -46,6 +57,7 @@ connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`🌐 API endpoint: http://localhost:${PORT}/api`);
+    console.log('🟢 CORS FRONTEND_URL:', FRONTEND_URL);
   });
 });
 
