@@ -9,6 +9,7 @@ const Dashboard = () => {
   const { user, logout } = useAuth();
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedMeetings, setExpandedMeetings] = useState(new Set());
 
   useEffect(() => {
     fetchMeetings();
@@ -36,8 +37,12 @@ const Dashboard = () => {
     navigate('/');
   };
 
-  const copyLink = (shareLink) => {
-    const url = `${window.location.origin}/meeting/${shareLink}`;
+  const copyLink = (meeting) => {
+    if (meeting.status === 'expired') {
+      alert('Cannot share expired meeting link');
+      return;
+    }
+    const url = `${window.location.origin}/meeting/${meeting.shareLink}`;
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
   };
@@ -45,6 +50,44 @@ const Dashboard = () => {
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  const handleDeleteMeeting = async (meeting) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete "${meeting.name}"?\n\n` +
+      `This will permanently delete the meeting and all ${meeting.participants?.length || 0} participant responses.\n\n` +
+      `This action cannot be undone.`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.delete(`/api/meetings/${meeting.shareLink}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.data.success) {
+        // Remove from local state
+        setMeetings(meetings.filter(m => m._id !== meeting._id));
+        alert('Meeting deleted successfully');
+      }
+    } catch (error) {
+      console.error('Delete meeting error:', error);
+      alert('Failed to delete meeting. Please try again.');
+    }
+  };
+
+  const toggleParticipants = (meetingId) => {
+    setExpandedMeetings(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(meetingId)) {
+        newSet.delete(meetingId);
+      } else {
+        newSet.add(meetingId);
+      }
+      return newSet;
+    });
   };
 
   return (
@@ -128,22 +171,125 @@ const Dashboard = () => {
                         <span className="info-label">👥 Participants:</span>
                         <span className="info-value">
                           {meeting.participants?.length || 0} joined
+                          {meeting.participants?.length > 0 && (
+                            <button
+                              onClick={() => toggleParticipants(meeting._id)}
+                              style={{
+                                marginLeft: '8px',
+                                background: 'none',
+                                border: 'none',
+                                color: '#CEB888',
+                                cursor: 'pointer',
+                                fontSize: '12px',
+                                textDecoration: 'underline'
+                              }}
+                            >
+                              {expandedMeetings.has(meeting._id) ? '▼ Hide' : '▶ View'}
+                            </button>
+                          )}
                         </span>
                       </div>
+                      {meeting.optimalTime && meeting.availableDays?.[meeting.optimalTime.dayIndex] && (
+                        <div className="info-row optimal-result">
+                          <span className="info-label">⭐ Best Time:</span>
+                          <span className="info-value">
+                            {formatDate(meeting.availableDays[meeting.optimalTime.dayIndex])} ({meeting.optimalTime.participantCount} available)
+                          </span>
+                        </div>
+                      )}
+                      {meeting.optimalLocation && (
+                        <div className="info-row optimal-result">
+                          <span className="info-label">📍 Best Location:</span>
+                          <span className="info-value">
+                            {meeting.optimalLocation.buildingName || meeting.optimalLocation.buildingAbbr || 'Calculated Center'}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    
+
+                    {expandedMeetings.has(meeting._id) && meeting.participants?.length > 0 && (
+                      <div className="participants-section" style={{
+                        marginTop: '16px',
+                        padding: '12px',
+                        background: '#f9f9f9',
+                        borderRadius: '8px',
+                        border: '1px solid #e0e0e0'
+                      }}>
+                        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: 600 }}>
+                          Participants ({meeting.participants.length})
+                        </h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {meeting.participants.map((participant, index) => (
+                            <div
+                              key={participant._id || index}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '8px',
+                                background: 'white',
+                                borderRadius: '6px',
+                                fontSize: '13px'
+                              }}
+                            >
+                              <div style={{
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                                background: '#CEB888',
+                                color: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                flexShrink: 0
+                              }}>
+                                {participant.name?.charAt(0).toUpperCase() || '?'}
+                              </div>
+                              <div style={{ flex: 1 }}>
+                                <div style={{ fontWeight: 500, color: '#333' }}>
+                                  {participant.name}
+                                </div>
+                                <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                                  {participant.availability?.length || 0} slots •
+                                  {participant.location?.buildingAbbr ? ` From ${participant.location.buildingAbbr}` : ' No location'}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     <div className="meeting-actions">
-                      <button 
+                      <button
                         className="btn btn-secondary btn-sm"
-                        onClick={() => copyLink(meeting.shareLink)}
+                        onClick={() => copyLink(meeting)}
+                        disabled={meeting.status === 'expired'}
+                        style={{
+                          opacity: meeting.status === 'expired' ? 0.5 : 1,
+                          cursor: meeting.status === 'expired' ? 'not-allowed' : 'pointer'
+                        }}
                       >
-                        📋 Copy Link
+                        📋 {meeting.status === 'expired' ? 'Expired' : 'Copy Link'}
                       </button>
-                      <button 
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => navigate(`/meeting/${meeting.shareLink}`)}
                       >
                         View →
+                      </button>
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => handleDeleteMeeting(meeting)}
+                        style={{
+                          background: '#ff4444',
+                          color: 'white',
+                          border: 'none'
+                        }}
+                      >
+                        🗑️ Delete
                       </button>
                     </div>
                   </div>
