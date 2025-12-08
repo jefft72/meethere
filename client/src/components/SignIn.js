@@ -62,7 +62,7 @@ const SignIn = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="your.email@purdue.edu"
+              placeholder="you@example.com"
             />
           </div>
 

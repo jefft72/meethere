@@ -24,7 +24,7 @@ const MeetingCreator = () => {
     timezone: 'America/New_York',
     locationConstraint: {
       enabled: false,
-      center: { lat: 40.4237, lng: -86.9212 }, // Purdue default
+      center: { lat: 40.4237, lng: -86.9212 }, // Default location
       radius: 4,
       address: '',
     },

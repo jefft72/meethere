@@ -202,7 +202,7 @@ const Dashboard = () => {
                                 marginLeft: '8px',
                                 background: 'none',
                                 border: 'none',
-                                color: '#CEB888',
+                                color: '#0071e3',
                                 cursor: 'pointer',
                                 fontSize: '12px',
                                 textDecoration: 'underline'
@@ -278,7 +278,7 @@ const Dashboard = () => {
                                 width: '32px',
                                 height: '32px',
                                 borderRadius: '50%',
-                                background: '#CEB888',
+                                background: '#0071e3',
                                 color: 'white',
                                 display: 'flex',
                                 alignItems: 'center',

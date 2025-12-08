@@ -4,8 +4,8 @@ import './LocationMap.css';
 
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-// Purdue campus center coordinates
-const PURDUE_CENTER = {
+// Default map center (can be customized)
+const DEFAULT_CENTER = {
   lat: 40.4274,
   lng: -86.9169,
 };
@@ -160,7 +160,7 @@ const LocationMap = ({ onLocationSelect }) => {
     return (
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={selectedLocation ? { lat: selectedLocation.lat, lng: selectedLocation.lng } : PURDUE_CENTER}
+        center={selectedLocation ? { lat: selectedLocation.lat, lng: selectedLocation.lng } : DEFAULT_CENTER}
         zoom={selectedLocation ? 17 : 15}
         options={mapOptions}
         onLoad={onMapLoad}

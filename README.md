@@ -1,6 +1,6 @@
-# meetHere 🚂
+# meetHere 📍
 
-**Streamline group coordination for the Purdue University community**
+**Streamline group coordination for teams everywhere**
 
 meetHere is a web-based application designed to solve the two most common friction points in student group work: finding a time when everyone is free and finding a location that is geographically fair for all attendees.
 
@@ -11,17 +11,17 @@ By integrating a "when2meet" style availability grid with Google Maps API locati
 - **Smart Scheduling**: When2meet-style availability grid with enhanced UX
   - Drag-to-select on desktop
   - Touch-optimized "paint mode" for mobile devices
-  - Visual availability heatmap with Purdue Gold color scheme
+  - Visual availability heatmap with clean color scheme
 
 - **Location Triangulation**: Find the most geographically fair meeting spot
   - Participants mark their starting location
   - Algorithm calculates optimal campus building
   - Minimizes total travel distance for all attendees
 
-- **Purdue-Themed Design**: "Boiler Up" industrial collegiate aesthetic
-  - Primary: Purdue Gold (#CEB888)
-  - Secondary: Black (#000000)
-  - Dark mode default for engineering appeal
+- **Clean Modern Design**: Apple-inspired aesthetic
+  - Primary: Blue (#0071e3)
+  - Secondary: Grey (#86868b)
+  - Light mode with clean, minimal interface
 
 - **Real-time Collaboration**: See updates as participants submit availability
 - **Mobile Responsive**: Works seamlessly on all devices
@@ -32,7 +32,7 @@ By integrating a "when2meet" style availability grid with Google Maps API locati
 - **React** - UI framework
 - **React Router** - Client-side routing
 - **Google Maps API** - Location services and mapping
-- **CSS3** - Custom styling with Purdue theme
+- **CSS3** - Custom styling with modern theme
 
 ### Backend
 - **Node.js** - Runtime environment
@@ -166,10 +166,10 @@ meetHere/
 ## 🎨 UI/UX Design
 
 ### Color Palette
-- **Primary**: Purdue Gold (#CEB888)
-- **Secondary**: Black (#000000)
-- **Background**: Dark Grey/Charcoal (#1a1a1a, #2d2d2d)
-- **Accents**: Railway tracks texture, locomotive iconography
+- **Primary**: Apple Blue (#0071e3)
+- **Secondary**: Dark Grey (#1d1d1f)
+- **Background**: Light Grey (#f5f5f7) / White
+- **Accents**: Subtle shadows, rounded corners
 
 ### Typography
 - **Headers**: Impact (bold, industrial feel)
@@ -187,7 +187,7 @@ meetHere/
 - [ ] Recurring meetings
 - [ ] Weather integration
 - [ ] Indoor navigation suggestions
-- [ ] Integration with Purdue's building API
+- [ ] Integration with campus building APIs
 - [ ] User accounts and meeting history
 - [ ] Export to calendar (ICS format)
 
@@ -207,15 +207,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Built with ❤️ by Purdue students, for Purdue students
+- Built with ❤️ for students everywhere
 
 ## 🎓 Acknowledgments
 
 - Inspired by When2meet
-- Purdue University branding and color scheme
+- Apple design language
 - CS390WAP course project
 
 ---
 
-**Boiler Up! 🚂**
+**Schedule smarter! 📍**
 

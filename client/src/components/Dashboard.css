@@ -1,12 +1,14 @@
 .dashboard {
   min-height: 100vh;
-  background-color: var(--dark-grey);
+  background-color: #f5f5f7;
 }
 
 .dashboard-nav {
-  background-color: var(--purdue-black);
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(206, 184, 136, 0.2);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -19,8 +21,8 @@
 }
 
 .dashboard-nav .logo {
-  font-size: 28px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -31,9 +33,9 @@
 }
 
 .user-greeting {
-  color: var(--purdue-gold);
-  font-weight: 600;
-  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .dashboard-content {
@@ -48,16 +50,17 @@
 }
 
 .dashboard-header h1 {
-  font-size: 36px;
-  color: var(--white);
+  font-size: 32px;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .meetings-section {
-  background-color: var(--charcoal);
-  border-radius: 8px;
-  padding: 60px 40px;
-  border: 1px solid rgba(206, 184, 136, 0.1);
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 48px 40px;
   min-height: 400px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .empty-state {
@@ -67,48 +70,48 @@
 }
 
 .empty-icon {
-  font-size: 80px;
+  font-size: 64px;
   margin-bottom: 24px;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .empty-state h2 {
   font-size: 24px;
-  color: var(--white);
+  color: var(--text-primary);
   margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .empty-state p {
-  color: #b0b0b0;
-  font-size: 16px;
+  color: var(--text-secondary);
+  font-size: 15px;
   margin-bottom: 32px;
 }
 
 .loading-state {
   text-align: center;
   padding: 60px 20px;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 /* Meeting cards grid */
 .meetings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .meeting-card {
-  background-color: var(--dark-grey);
-  border: 1px solid #333;
+  background-color: #f5f5f7;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 24px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .meeting-card:hover {
-  border-color: var(--purdue-gold);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(206, 184, 136, 0.1);
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .meeting-header {
@@ -119,37 +122,39 @@
 }
 
 .meeting-header h3 {
-  font-size: 20px;
-  color: var(--white);
+  font-size: 19px;
+  color: var(--text-primary);
   margin: 0;
   flex: 1;
+  font-weight: 600;
 }
 
 .status-badge {
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  border-radius: 980px;
+  font-size: 11px;
+  font-weight: 500;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .status-badge.active {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: #22c55e;
+  background-color: rgba(52, 199, 89, 0.15);
+  color: #34c759;
 }
 
 .status-badge.completed {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  background-color: rgba(0, 113, 227, 0.1);
+  color: var(--accent-blue);
 }
 
 .status-badge.cancelled {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
 }
 
 .meeting-description {
-  color: #b0b0b0;
+  color: var(--text-secondary);
   font-size: 14px;
   margin-bottom: 16px;
   line-height: 1.5;
@@ -163,7 +168,7 @@
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #2a2a2a;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .info-row:last-child {
@@ -171,13 +176,13 @@
 }
 
 .info-label {
-  font-size: 14px;
-  color: #888;
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .info-value {
-  font-size: 14px;
-  color: var(--white);
+  font-size: 13px;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -222,29 +227,29 @@
   }
 
   .meetings-section {
-    padding: 40px 24px;
+    padding: 32px 24px;
   }
 
   .empty-icon {
-    font-size: 60px;
+    font-size: 48px;
   }
 }
 
 /* Optimal results styling */
 .optimal-result {
-  background: linear-gradient(135deg, rgba(206, 184, 136, 0.15) 0%, rgba(206, 184, 136, 0.05) 100%);
-  border-left: 3px solid var(--purdue-gold);
+  background: rgba(0, 113, 227, 0.08);
+  border-left: 3px solid var(--accent-blue);
   padding: 8px 12px;
   margin-top: 8px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .optimal-result .info-label {
-  font-weight: 700;
-  color: var(--purdue-gold);
+  font-weight: 600;
+  color: var(--accent-blue);
 }
 
 .optimal-result .info-value {
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 500;
+  color: var(--text-primary);
 }
