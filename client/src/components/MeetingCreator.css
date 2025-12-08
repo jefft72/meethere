@@ -4,7 +4,7 @@
 }
 
 .creator-header {
-  background-color: var(--purdue-black);
+  background-color: var(--text-primary);
   padding: 20px 0;
   border-bottom: 1px solid rgba(206, 184, 136, 0.2);
 }
@@ -53,9 +53,9 @@
 }
 
 .progress-step.active .step-circle {
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
-  border-color: var(--purdue-gold);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-blue);
 }
 
 .progress-step span {
@@ -65,7 +65,7 @@
 }
 
 .progress-step.active span {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .progress-line {
@@ -103,7 +103,7 @@
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
   font-size: 14px;
 }
@@ -124,7 +124,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .form-group input::placeholder,
@@ -147,13 +147,13 @@
   background-color: var(--dark-grey);
   padding: 24px;
   border-radius: 6px;
-  border-left: 4px solid var(--purdue-gold);
+  border-left: 4px solid var(--accent-blue);
 }
 
 .info-box h3 {
   font-size: 20px;
   margin-bottom: 16px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .info-box ul {
@@ -172,7 +172,7 @@
   content: '→';
   position: absolute;
   left: 0;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 700;
 }
 
@@ -180,9 +180,9 @@
   margin-top: 15px;
   padding: 12px 16px;
   background-color: rgba(206, 184, 136, 0.1);
-  border: 1px solid var(--purdue-gold);
+  border: 1px solid var(--accent-blue);
   border-radius: 6px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
 }
 
@@ -226,7 +226,7 @@
 
 .form-group select:focus {
   outline: none;
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .checkbox-label {
@@ -242,7 +242,7 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: var(--purdue-gold);
+  accent-color: var(--accent-blue);
 }
 
 /* Calendar styles */
@@ -263,8 +263,8 @@
 
 .calendar-nav-btn {
   background: none;
-  border: 2px solid var(--purdue-gold);
-  color: var(--purdue-gold);
+  border: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -278,7 +278,7 @@
 }
 
 .calendar-nav-btn:hover {
-  background-color: var(--purdue-gold);
+  background-color: var(--accent-blue);
   color: var(--black);
   transform: scale(1.1);
 }
@@ -313,7 +313,7 @@
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   padding: 8px;
   text-transform: uppercase;
 }
@@ -341,14 +341,14 @@
 }
 
 .calendar-day:hover {
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   transform: scale(1.05);
 }
 
 .calendar-day.selected {
   background-color: rgba(206, 184, 136, 0.2);
-  border-color: var(--purdue-gold);
-  color: var(--purdue-gold);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
 }
 
 .calendar-day.selected::after {
@@ -357,7 +357,7 @@
   top: 2px;
   right: 4px;
   font-size: 12px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .calendar-day.empty {
@@ -373,7 +373,7 @@
 .selected-count {
   margin-top: 12px;
   font-size: 14px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   font-weight: 600;
   text-align: center;
 }
@@ -407,7 +407,7 @@
 }
 
 .success-message strong {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .share-link-box {
@@ -444,7 +444,7 @@
 
 .link-display input:focus {
   outline: none;
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .meeting-details {
@@ -512,7 +512,7 @@
 }
 
 .success-message strong {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 .share-link-box {
@@ -549,7 +549,7 @@
 
 .link-display input:focus {
   outline: none;
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .meeting-details {

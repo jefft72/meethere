@@ -27,7 +27,7 @@
 
 .search-input:focus {
   outline: none;
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
 }
 
 .search-input::placeholder {
@@ -36,8 +36,8 @@
 
 .btn-location {
   padding: 12px 20px;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -113,7 +113,7 @@
 
 .map-overlay h3 {
   font-size: 24px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   margin-bottom: 12px;
 }
 
@@ -132,7 +132,7 @@
 
 .buildings-list h4 {
   font-size: 18px;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   margin-bottom: 20px;
   font-weight: 700;
 }
@@ -154,21 +154,21 @@
 }
 
 .building-card:hover {
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(206, 184, 136, 0.2);
 }
 
 .building-card.selected {
   background-color: rgba(206, 184, 136, 0.1);
-  border-color: var(--purdue-gold);
+  border-color: var(--accent-blue);
   border-width: 2px;
 }
 
 .building-abbr {
   font-size: 20px;
   font-weight: 900;
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
   margin-bottom: 8px;
   font-family: Impact, 'Arial Black', sans-serif;
 }
@@ -185,8 +185,8 @@
   right: 12px;
   width: 28px;
   height: 28px;
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -199,14 +199,14 @@
   margin-top: 20px;
   padding: 16px;
   background-color: rgba(206, 184, 136, 0.1);
-  border-left: 4px solid var(--purdue-gold);
+  border-left: 4px solid var(--accent-blue);
   border-radius: 4px;
   color: var(--white);
   font-size: 14px;
 }
 
 .selected-location-info strong {
-  color: var(--purdue-gold);
+  color: var(--accent-blue);
 }
 
 /* Responsive */

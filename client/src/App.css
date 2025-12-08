@@ -10,11 +10,11 @@
 }
 
 .btn {
-  padding: 12px 32px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 17px;
+  font-weight: 400;
   border: none;
-  border-radius: 4px;
+  border-radius: 980px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -22,25 +22,23 @@
 }
 
 .btn-primary {
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  background-color: var(--accent-blue);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: #d4c599;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(206, 184, 136, 0.3);
+  background-color: var(--accent-blue-hover);
+  transform: scale(1.02);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--purdue-gold);
-  border: 2px solid var(--purdue-gold);
+  color: var(--accent-blue);
+  border: none;
 }
 
 .btn-secondary:hover {
-  background-color: var(--purdue-gold);
-  color: var(--purdue-black);
+  text-decoration: underline;
 }
 
 /* Responsive */
@@ -50,7 +48,7 @@
   }
   
   .btn {
-    padding: 10px 24px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 15px;
   }
 }

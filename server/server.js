@@ -7,15 +7,18 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5002'],
+// Configure CORS to explicitly allow the frontend origin and support credentials.
+const FRONTEND_URL = process.env.FRONTEND_URL || '*';
+const corsOptions = {
+  origin: FRONTEND_URL === '*' ? true : FRONTEND_URL,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+};
 
-// Handle preflight
-app.options('*', cors());
+app.use(cors(corsOptions));
+// Ensure preflight requests are handled
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -65,6 +68,7 @@ connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`🌐 API endpoint: http://localhost:${PORT}/api`);
+    console.log('🟢 CORS FRONTEND_URL:', FRONTEND_URL);
   });
 });
 

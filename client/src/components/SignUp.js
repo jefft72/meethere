@@ -62,7 +62,7 @@ const SignUp = () => {
             </Link>
           </h1>
           <h2>Create Account</h2>
-          <p>Join the Purdue community on meetHere</p>
+          <p>Start coordinating meetings effortlessly</p>
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -90,7 +90,7 @@ const SignUp = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="your.email@purdue.edu"
+              placeholder="you@example.com"
             />
           </div>
 

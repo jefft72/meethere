@@ -47,14 +47,14 @@ const LandingPage = () => {
         <div className="container">
           <div className="hero-content">
             <div className="hero-badge">
-              <span>🚂 BOILER UP</span>
+              <span>✨ NEW</span>
             </div>
             <h1 className="hero-title">
               Find the Perfect Time<br />
               <span className="highlight">& Place to Meet</span>
             </h1>
             <p className="hero-subtitle">
-              Streamline group coordination for the Purdue community.<br />
+              Streamline group coordination for teams everywhere.<br />
               No more endless group chats. No more inconvenient locations.
             </p>
             <div className="hero-buttons">
@@ -100,7 +100,7 @@ const LandingPage = () => {
 
       <section id="features" className="features">
         <div className="container">
-          <h2 className="section-title">Built for Boilermakers</h2>
+          <h2 className="section-title">Built for Teams</h2>
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">📅</div>
@@ -176,7 +176,7 @@ const LandingPage = () => {
         <div className="container">
           <div className="cta-content">
             <h2>Ready to Coordinate Your Team?</h2>
-            <p>Join Purdue students simplifying group meetings</p>
+            <p>Join thousands of teams simplifying group meetings</p>
             <Link to="/signup" className="btn btn-primary btn-large">
               Create Your First Meeting
             </Link>
@@ -189,7 +189,7 @@ const LandingPage = () => {
           <div className="footer-content">
             <div className="footer-brand">
               <h3>meetHere</h3>
-              <p>Built by Boilermakers, for Boilermakers</p>
+              <p>Simple scheduling for everyone</p>
             </div>
             <div className="footer-links">
               <div className="footer-section">
@@ -199,8 +199,8 @@ const LandingPage = () => {
                 <Link to="/signup">Get Started</Link>
               </div>
               <div className="footer-section">
-                <h4>About</h4>
-                <a href="https://purdue.edu" target="_blank" rel="noopener noreferrer">Purdue University</a>
+                <h4>Company</h4>
+                <a href="#about">About</a>
                 <a href="#contact">Contact</a>
               </div>
             </div>

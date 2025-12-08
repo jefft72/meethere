@@ -332,7 +332,7 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
   return R * c; // Distance in meters
 }
 
-// Helper function to find optimal meeting locations from Purdue buildings
+// Helper function to find optimal meeting locations from campus buildings
 function findOptimalLocations(participants, meeting) {
   const campusBuildings = [
     // Academic Buildings
@@ -361,7 +361,7 @@ function findOptimalLocations(participants, meeting) {
     { id: 19, name: 'Mathematical Sciences Library', abbr: 'MLIB', lat: 40.42500, lng: -86.91500 },
     
     // Student Centers & Unions
-    { id: 20, name: 'Purdue Memorial Union', abbr: 'PMU', lat: 40.42480, lng: -86.91100 },
+    { id: 20, name: 'Memorial Union', abbr: 'PMU', lat: 40.42480, lng: -86.91100 },
     { id: 21, name: 'Stewart Center', abbr: 'STEW', lat: 40.42600, lng: -86.91300 },
     { id: 22, name: 'Cordova Recreational Sports Center', abbr: 'CoRec', lat: 40.42920, lng: -86.92030 },
     

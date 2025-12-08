@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
         justifyContent: 'center', 
         alignItems: 'center', 
         minHeight: '100vh',
-        color: 'var(--purdue-gold)'
+        color: 'var(--accent-blue)'
       }}>
         Loading...
       </div>

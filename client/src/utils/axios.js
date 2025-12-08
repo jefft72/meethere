@@ -4,6 +4,7 @@ import axios from 'axios';
 axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 // Don't set baseURL - let the proxy in package.json handle it
 axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.withCredentials = true; // Enable cookies/credentials for cross-origin requests
 
 // Add request interceptor for debugging
 axios.interceptors.request.use(
