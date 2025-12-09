@@ -6,6 +6,24 @@ meetHere is a web-based application designed to solve the two most common fricti
 
 By integrating a "when2meet" style availability grid with Google Maps API location triangulation, meetHere calculates the optimal campus building for a meeting based on where members are coming from.
 
+## 🎯 Purpose
+MeetHere merges two workflows into one intuitive tool:
+- A When2Meet-style **availability grid**
+- A Google Maps–powered **location fairness algorithm**
+
+## 👥 Target Audience
+- University students  
+- Clubs and organizations  
+- Friends and small groups  
+- Teams needing fast decisions  
+
+## 🛠 Problem Solved
+- No need to manually compare calendars  
+- No switching between maps, chats, and scheduling apps  
+- Eliminates bias in choosing a meeting place  
+- Produces a fair, data-driven midpoint  
+
+
 ## ✨ Features
 
 - **Smart Scheduling**: When2meet-style availability grid with enhanced UX
