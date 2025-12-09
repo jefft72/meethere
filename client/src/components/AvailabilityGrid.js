@@ -17,16 +17,30 @@ const AvailabilityGrid = ({
   // Helper function moved up before useEffect that uses it
   const getCellId = useCallback((dayIndex, timeIndex) => `${dayIndex}-${timeIndex}`, []);
 
-  // Initialize selectedSlots from initialSelection prop
+  // Track if initial selection has been applied
+  const initialSelectionApplied = useRef(false);
+
+  // Initialize selectedSlots from initialSelection prop (only on first load or when data actually changes)
   useEffect(() => {
+    // Create a stable key from the initialSelection to detect actual changes
+    const selectionKey = initialSelection && initialSelection.length > 0
+      ? initialSelection.map(slot => `${slot.dayIndex}-${slot.timeIndex}`).sort().join(',')
+      : '';
+    
+    // Only apply initial selection once, or if the selection data actually changed
     if (initialSelection && initialSelection.length > 0) {
       const initialSet = new Set(
         initialSelection.map(slot => getCellId(slot.dayIndex, slot.timeIndex))
       );
-      setSelectedSlots(initialSet);
-    } else {
-      // Clear selection if initialSelection is empty (reset case)
+      // Only update if this is a new selection (not already applied)
+      if (!initialSelectionApplied.current || selectionKey !== initialSelectionApplied.current) {
+        setSelectedSlots(initialSet);
+        initialSelectionApplied.current = selectionKey;
+      }
+    } else if (!initialSelectionApplied.current) {
+      // Only clear on initial mount if no selection provided
       setSelectedSlots(new Set());
+      initialSelectionApplied.current = 'empty';
     }
   }, [initialSelection, getCellId]);
 
