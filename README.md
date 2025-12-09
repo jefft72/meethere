@@ -1,10 +1,28 @@
 # meetHere 📍
+https://meethere-ten.vercel.app/
 
 **Streamline group coordination for teams everywhere**
 
 meetHere is a web-based application designed to solve the two most common friction points in student group work: finding a time when everyone is free and finding a location that is geographically fair for all attendees.
 
 By integrating a "when2meet" style availability grid with Google Maps API location triangulation, meetHere calculates the optimal campus building for a meeting based on where members are coming from.
+
+## 🎯 Purpose
+MeetHere merges two workflows into one intuitive tool:
+- A When2Meet-style **availability grid**
+- A Google Maps–powered **location fairness algorithm**
+
+## 👥 Target Audience
+- University students  
+- Clubs and organizations  
+- Friends and small groups  
+- Teams needing fast decisions  
+
+## 🛠 Problem Solved
+- No need to manually compare calendars  
+- No switching between maps, chats, and scheduling apps  
+- Eliminates bias in choosing a meeting place  
+- Produces a fair, data-driven midpoint  
 
 ## ✨ Features
 
@@ -23,9 +41,35 @@ By integrating a "when2meet" style availability grid with Google Maps API locati
   - Secondary: Grey (#86868b)
   - Light mode with clean, minimal interface
 
+- **Event System**
+  - Create events with dynamic links  
+  - Participants join instantly (no login required)  
+  - Automatic aggregation of time + location data
+  
 - **Real-time Collaboration**: See updates as participants submit availability
 - **Mobile Responsive**: Works seamlessly on all devices
 
+![Landing Page](./images/login.png)
+![Meeting Map](./images/googlemaps.png)
+![Availability Grid](./images/showmeetings.png)
+
+## 🎨 UI/UX Design
+
+### Color Palette
+- **Primary**: Apple Blue (#0071e3)
+- **Secondary**: Dark Grey (#1d1d1f)
+- **Background**: Light Grey (#f5f5f7) / White
+- **Accents**: Subtle shadows, rounded corners
+
+### Typography
+- **Headers**: Impact (bold, industrial feel)
+- **Body**: Open Sans (clean, readable)
+
+### Component Design
+- **Availability Grid**: Gold gradient (0/5 = Grey, 5/5 = Deep Gold)
+- **Map Markers**: Black dots for users, "Motion P" for destination
+- **Mobile Touch**: Paint mode toggle for easy mobile selection
+  
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -162,23 +206,6 @@ meetHere/
 - `GET /api/participants/:id` - Get specific participant
 - `PUT /api/participants/:id` - Update participant availability
 - `DELETE /api/participants/:id` - Delete participant
-
-## 🎨 UI/UX Design
-
-### Color Palette
-- **Primary**: Apple Blue (#0071e3)
-- **Secondary**: Dark Grey (#1d1d1f)
-- **Background**: Light Grey (#f5f5f7) / White
-- **Accents**: Subtle shadows, rounded corners
-
-### Typography
-- **Headers**: Impact (bold, industrial feel)
-- **Body**: Open Sans (clean, readable)
-
-### Component Design
-- **Availability Grid**: Gold gradient (0/5 = Grey, 5/5 = Deep Gold)
-- **Map Markers**: Black dots for users, "Motion P" for destination
-- **Mobile Touch**: Paint mode toggle for easy mobile selection
 
 ## 🔮 Future Enhancements
 
