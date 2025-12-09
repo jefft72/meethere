@@ -120,6 +120,7 @@ const Dashboard = () => {
         <div className="container">
           <div className="nav-content">
             <h1 className="logo" onClick={() => navigate('/')}>
+              <img src="/meetHere_icon_trans.png" alt="meetHere" className="logo-icon" />
               <span className="logo-meet">meet</span>
               <span className="logo-here">Here</span>
             </h1>
