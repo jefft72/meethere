@@ -9,6 +9,18 @@
   border-bottom: 2px solid #1d1d1f;
 }
 
+.creator-logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.creator-logo .logo-icon {
+  height: 28px;
+  width: 28px;
+  margin-right: 8px;
+}
+
 .meeting-content {
   padding: 40px 0 80px;
 }

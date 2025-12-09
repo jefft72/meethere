@@ -294,6 +294,7 @@ const MeetingView = () => {
       <div className="meeting-header">
         <div className="container">
           <h1 className="creator-logo" onClick={() => navigate('/')}>
+            <img src="/meetHere_icon_trans.png" alt="meetHere" className="logo-icon" />
             <span className="logo-meet">meet</span>
             <span className="logo-here">Here</span>
           </h1>
