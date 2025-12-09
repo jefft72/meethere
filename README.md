@@ -50,7 +50,7 @@ MeetHere merges two workflows into one intuitive tool:
 
 ![Landing Page](./images/login.png)
 ![Availability Grid](./images/showmeetings.png)
-![Meeting Map](./images/map.png)
+![Meeting Map](./images/googlemaps.png)
 
 ## 🛠️ Tech Stack
 
