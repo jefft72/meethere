@@ -23,7 +23,6 @@ MeetHere merges two workflows into one intuitive tool:
 - Eliminates bias in choosing a meeting place  
 - Produces a fair, data-driven midpoint  
 
-
 ## ✨ Features
 
 - **Smart Scheduling**: When2meet-style availability grid with enhanced UX
@@ -48,6 +47,10 @@ MeetHere merges two workflows into one intuitive tool:
   
 - **Real-time Collaboration**: See updates as participants submit availability
 - **Mobile Responsive**: Works seamlessly on all devices
+
+![Landing Page](./images/login.png)
+![Availability Grid](./images/showmeetings.png)
+![Meeting Map](./images/map.png)
 
 ## 🛠️ Tech Stack
 
